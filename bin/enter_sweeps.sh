@@ -1,0 +1,1 @@
+python3 /home/ec2-user/hgtv_sweeps/lib/python/enter_sweeps.py
