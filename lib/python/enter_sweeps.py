@@ -11,9 +11,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 if __name__ == '__main__':
     # Store the date that the sweepstakes ends
     sweeps_end_date = datetime(year=2020, month=2, day=17)
+    print('hi')
 
     # If the sweepstakes is still ongoing, enter the sweepstakes
     if datetime.today() <= sweeps_end_date + timedelta(days=1):
+        print('hello')
         data_dir = '/home/ec2-user/hgtv_sweeps/data'
 
         # Read the file that has all entrants' email addresses
