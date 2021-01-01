@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -18,8 +18,34 @@ def retry_connection(driver, url, fails):
             retry_connection(driver, url, fails)
     else:
         driver.quit()
-
     return
+
+
+def retry_keys(driver, email_xpath, email, fails):
+    # Recursive function to retry entering email
+    if fails <= 5:
+        try:
+            driver.find_element(By.XPATH, email_xpath).send_keys(email)
+        except StaleElementReferenceException:
+            fails += 1
+            retry_keys(driver, email_xpath, email, fails)
+    else:
+        driver.quit()
+    return
+
+
+def retry_click(driver, xpath, fails):
+    # Recursive function to retry clicking button
+    if fails <= 5:
+        try:
+            driver.find_element(By.XPATH, xpath).click()
+        except StaleElementReferenceException:
+            fails += 1
+            retry_click(driver, xpath, fails)
+    else:
+        driver.quit()
+    return
+
 
 if __name__ == '__main__':
     # Store the date that the sweepstakes ends
@@ -75,17 +101,26 @@ if __name__ == '__main__':
 
                 # Enter the email
                 wait.until(EC.presence_of_element_located((By.XPATH, email_xpath)))
-                driver.find_element(By.XPATH, email_xpath).send_keys(email)
+                fails = 0
+                retry_keys(driver, email_xpath, email, fails)
+                # driver.find_element(By.XPATH, email_xpath).send_keys(email)
 
                 # Click 'Begin Entry'
                 wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
-                driver.find_element(By.XPATH, advance_xpath).click()
+                fails = 0
+                retry_click(driver, advance_xpath, fails)
+                # driver.find_element(By.XPATH, advance_xpath).click()
 
                 # If the email hasn't already entered today, click Submit
                 try:
                     wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
-                    driver.find_element(By.XPATH, submit_xpath).click()
-                    driver.find_element(By.XPATH, submit_xpath).click()
+                    fails = 0
+                    retry_click(driver, submit_path, fails)
+
+                    fails = 0
+                    retry_click(driver, submit_xpath, fails)
+                    # driver.find_element(By.XPATH, submit_xpath).click()
+                    # driver.find_element(By.XPATH, submit_xpath).click()
 
                 except TimeoutException:
                     pass
