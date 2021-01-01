@@ -8,6 +8,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 
+def retry_connection(driver, url, fails):
+    # Recursive function to re-connect to URL
+    if fails <= 5:
+        try:
+            driver.get(url)
+        except TimeoutException:
+            fails += 1
+            retry_connection(driver, url, fails)
+    else:
+        driver.quit()
+
+    return
+
 if __name__ == '__main__':
     # Store the date that the sweepstakes ends
     sweeps_end_date = datetime(year=2021, month=2, day=17)
@@ -53,7 +66,8 @@ if __name__ == '__main__':
         # Enter all of the email addresses in all of the participating sites
         for url in urls:
             for email in emails:
-                driver.get(url)
+                fails = 0
+                retry_connection(driver, url, fails)
 
                 # Move into the iFrame
                 wait.until(EC.presence_of_element_located((By.ID, iframe_dict[url])))
