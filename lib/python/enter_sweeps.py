@@ -117,8 +117,8 @@ if __name__ == '__main__':
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
 
-                    fails = 0
-                    retry_click(driver, submit_xpath, fails)
+                    # fails = 0
+                    # retry_click(driver, submit_xpath, fails)
                     # driver.find_element(By.XPATH, submit_xpath).click()
                     # driver.find_element(By.XPATH, submit_xpath).click()
 
