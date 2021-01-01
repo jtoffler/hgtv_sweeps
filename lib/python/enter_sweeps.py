@@ -42,6 +42,11 @@ if __name__ == '__main__':
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
+        options.addArguments("--disable-infobars")
+        options.addArguments("--disable-browser-side-navigation")
+        options.addArguments("--disable-gpu")
+        options.addArguments("enable-automation")
+        options.addArguments("start-maximized")
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         wait = WebDriverWait(driver, 5)
 
