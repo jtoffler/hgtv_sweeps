@@ -103,24 +103,17 @@ if __name__ == '__main__':
                 wait.until(EC.presence_of_element_located((By.XPATH, email_xpath)))
                 fails = 0
                 retry_keys(driver, email_xpath, email, fails)
-                # driver.find_element(By.XPATH, email_xpath).send_keys(email)
 
                 # Click 'Begin Entry'
                 wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
                 fails = 0
                 retry_click(driver, advance_xpath, fails)
-                # driver.find_element(By.XPATH, advance_xpath).click()
 
                 # If the email hasn't already entered today, click Submit
                 try:
                     wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
-
-                    # fails = 0
-                    # retry_click(driver, submit_xpath, fails)
-                    # driver.find_element(By.XPATH, submit_xpath).click()
-                    # driver.find_element(By.XPATH, submit_xpath).click()
 
                 except TimeoutException:
                     pass
