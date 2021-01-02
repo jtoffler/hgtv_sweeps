@@ -120,6 +120,8 @@ if __name__ == '__main__':
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
 
+                    print(f'successfully submitted for {email}')
+
                 except TimeoutException:
                     pass
 
