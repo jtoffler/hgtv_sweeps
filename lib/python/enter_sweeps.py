@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from selenium import webdriver
-from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,7 +26,7 @@ def retry_keys(driver, email_xpath, email, fails):
     if fails <= 5:
         try:
             driver.find_element(By.XPATH, email_xpath).send_keys(email)
-        except StaleElementReferenceException:
+        except (NoSuchElementException, StaleElementReferenceException):
             fails += 1
             retry_keys(driver, email_xpath, email, fails)
     else:
@@ -39,7 +39,7 @@ def retry_click(driver, xpath, fails):
     if fails <= 5:
         try:
             driver.find_element(By.XPATH, xpath).click()
-        except StaleElementReferenceException:
+        except (NoSuchElementException, StaleElementReferenceException):
             fails += 1
             retry_click(driver, xpath, fails)
     else:
@@ -119,8 +119,6 @@ if __name__ == '__main__':
                     wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
-
-                    print(f'successfully submitted for {email}')
 
                 except TimeoutException:
                     pass
