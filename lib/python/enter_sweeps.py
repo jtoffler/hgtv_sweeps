@@ -115,6 +115,11 @@ if __name__ == '__main__':
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
 
+                    # Need to click submit twice
+                    wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
+                    fails = 0
+                    retry_click(driver, submit_xpath, fails)
+
                 except TimeoutException:
                     pass
 
