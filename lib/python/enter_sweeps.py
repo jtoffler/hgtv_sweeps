@@ -43,7 +43,7 @@ def retry_click(driver, xpath, fails):
     if fails <= 5:
         try:
             wait = WebDriverWait(driver, 5)
-            wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
+            wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
             driver.find_element(By.XPATH, xpath).click()
         except (NoSuchElementException, StaleElementReferenceException):
             fails += 1
