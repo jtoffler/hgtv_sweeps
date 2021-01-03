@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,7 +27,7 @@ def retry_keys(driver, email_xpath, email, fails):
         try:
             wait.until(EC.presence_of_element_located((By.XPATH, email_xpath)))
             driver.find_element(By.XPATH, email_xpath).send_keys(email)
-        except (NoSuchElementException, StaleElementReferenceException):
+        except (ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException):
             fails += 1
             retry_keys(driver, email_xpath, email, fails)
     else:
@@ -41,7 +41,7 @@ def retry_click(driver, xpath, fails):
         try:
             wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
             driver.find_element(By.XPATH, xpath).click()
-        except (NoSuchElementException, StaleElementReferenceException):
+        except (ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException):
             fails += 1
             retry_click(driver, xpath, fails)
     else:
