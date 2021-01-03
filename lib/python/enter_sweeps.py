@@ -29,7 +29,7 @@ def retry_keys(wait, driver, email_xpath, email, fails):
             driver.find_element(By.XPATH, email_xpath).send_keys(email)
         except (ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException):
             fails += 1
-            retry_keys(driver, email_xpath, email, fails)
+            retry_keys(wait, driver, email_xpath, email, fails)
     else:
         driver.quit()
     return
@@ -43,7 +43,7 @@ def retry_click(wait, driver, xpath, fails):
             driver.find_element(By.XPATH, xpath).click()
         except (ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException):
             fails += 1
-            retry_click(driver, xpath, fails)
+            retry_click(wait, driver, xpath, fails)
     else:
         driver.quit()
     return
