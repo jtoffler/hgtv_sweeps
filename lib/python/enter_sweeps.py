@@ -18,7 +18,6 @@ def retry_connection(driver, url, fails):
             retry_connection(driver, url, fails)
     else:
         driver.quit()
-        print("I've quit")
     return
 
 
@@ -34,7 +33,6 @@ def retry_keys(driver, email_xpath, email, fails):
             retry_keys(driver, email_xpath, email, fails)
     else:
         driver.quit()
-        print("I've quit")
     return
 
 
@@ -50,7 +48,6 @@ def retry_click(driver, xpath, fails):
             retry_click(driver, xpath, fails)
     else:
         driver.quit()
-        print("I've quit")
     return
 
 
@@ -107,23 +104,19 @@ if __name__ == '__main__':
                 driver.switch_to.frame(iframe_dict[url])
 
                 # Enter the email
-                # wait.until(EC.presence_of_element_located((By.XPATH, email_xpath)))
                 fails = 0
                 retry_keys(driver, email_xpath, email, fails)
 
                 # Click 'Begin Entry'
-                # wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
                 fails = 0
                 retry_click(driver, advance_xpath, fails)
 
                 # If the email hasn't already entered today, click Submit
                 try:
-                    # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
 
                     # Sometimes you need to click submit twice
-                    # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
 
