@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from selenium import webdriver
-from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -122,10 +122,13 @@ if __name__ == '__main__':
                     fails = 0
                     retry_click(driver, submit_xpath, fails)
 
-                    # Need to click submit twice
+                    # Sometimes you need to click submit twice
                     # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
-                    fails = 0
-                    retry_click(driver, submit_xpath, fails)
+                    try:
+                        fails = 0
+                        retry_click(driver, submit_xpath, fails)
+                    except ElementClickInterceptedException:
+                        pass
 
                 except TimeoutException:
                     pass
