@@ -30,7 +30,7 @@ def retry_keys(driver, email_xpath, email, fails):
             driver.find_element(By.XPATH, email_xpath).send_keys(email)
         except (ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException):
             fails += 1
-            retry_keys(wait, driver, email_xpath, email, fails)
+            retry_keys(driver, email_xpath, email, fails)
     else:
         driver.quit()
     return
@@ -45,7 +45,7 @@ def retry_click(driver, xpath, fails):
             driver.find_element(By.XPATH, xpath).click()
         except (ElementNotInteractableException, NoSuchElementException, StaleElementReferenceException):
             fails += 1
-            retry_click(wait, driver, xpath, fails)
+            retry_click(driver, xpath, fails)
     else:
         driver.quit()
     return
@@ -106,23 +106,23 @@ if __name__ == '__main__':
                 # Enter the email
                 # wait.until(EC.presence_of_element_located((By.XPATH, email_xpath)))
                 fails = 0
-                retry_keys(wait, driver, email_xpath, email, fails)
+                retry_keys(driver, email_xpath, email, fails)
 
                 # Click 'Begin Entry'
                 # wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
                 fails = 0
-                retry_click(wait, driver, advance_xpath, fails)
+                retry_click(driver, advance_xpath, fails)
 
                 # If the email hasn't already entered today, click Submit
                 try:
                     # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
-                    retry_click(wait, driver, submit_xpath, fails)
+                    retry_click(driver, submit_xpath, fails)
 
                     # Need to click submit twice
                     # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
-                    retry_click(wait, driver, submit_xpath, fails)
+                    retry_click(driver, submit_xpath, fails)
 
                 except TimeoutException:
                     pass
