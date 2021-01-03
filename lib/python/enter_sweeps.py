@@ -92,7 +92,7 @@ if __name__ == '__main__':
         options.add_argument("--disable-browser-side-navigation")
         options.add_argument("--disable-gpu")
         options.add_argument("enable-automation")
-        options.add_argument("start-maximized")
+        # options.add_argument("start-maximized")
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         wait = WebDriverWait(driver, 5)
 
@@ -124,11 +124,8 @@ if __name__ == '__main__':
 
                     # Sometimes you need to click submit twice
                     # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
-                    try:
-                        fails = 0
-                        retry_click(driver, submit_xpath, fails)
-                    except ElementClickInterceptedException:
-                        pass
+                    fails = 0
+                    retry_click(driver, submit_xpath, fails)
 
                 except TimeoutException:
                     pass
