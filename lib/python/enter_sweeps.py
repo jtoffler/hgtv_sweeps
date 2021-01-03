@@ -21,7 +21,7 @@ def retry_connection(driver, url, fails):
     return
 
 
-def retry_keys(driver, email_xpath, email, fails):
+def retry_keys(wait, driver, email_xpath, email, fails):
     # Recursive function to retry entering email
     if fails <= 5:
         try:
@@ -35,7 +35,7 @@ def retry_keys(driver, email_xpath, email, fails):
     return
 
 
-def retry_click(driver, xpath, fails):
+def retry_click(wait, driver, xpath, fails):
     # Recursive function to retry clicking button
     if fails <= 5:
         try:
@@ -104,23 +104,23 @@ if __name__ == '__main__':
                 # Enter the email
                 # wait.until(EC.presence_of_element_located((By.XPATH, email_xpath)))
                 fails = 0
-                retry_keys(driver, email_xpath, email, fails)
+                retry_keys(wait, driver, email_xpath, email, fails)
 
                 # Click 'Begin Entry'
                 # wait.until(EC.element_to_be_clickable((By.XPATH, advance_xpath)))
                 fails = 0
-                retry_click(driver, advance_xpath, fails)
+                retry_click(wait, driver, advance_xpath, fails)
 
                 # If the email hasn't already entered today, click Submit
                 try:
                     # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
-                    retry_click(driver, submit_xpath, fails)
+                    retry_click(wait, driver, submit_xpath, fails)
 
                     # Need to click submit twice
                     # wait.until(EC.element_to_be_clickable((By.XPATH, submit_xpath)))
                     fails = 0
-                    retry_click(driver, submit_xpath, fails)
+                    retry_click(wait, driver, submit_xpath, fails)
 
                 except TimeoutException:
                     pass
