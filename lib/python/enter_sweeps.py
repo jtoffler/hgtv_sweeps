@@ -18,6 +18,7 @@ def retry_connection(driver, url, fails):
             retry_connection(driver, url, fails)
     else:
         driver.quit()
+        print("I've quit")
     return
 
 
@@ -33,6 +34,7 @@ def retry_keys(driver, email_xpath, email, fails):
             retry_keys(driver, email_xpath, email, fails)
     else:
         driver.quit()
+        print("I've quit")
     return
 
 
@@ -48,6 +50,7 @@ def retry_click(driver, xpath, fails):
             retry_click(driver, xpath, fails)
     else:
         driver.quit()
+        print("I've quit")
     return
 
 
