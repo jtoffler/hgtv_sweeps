@@ -78,9 +78,7 @@ if __name__ == '__main__':
         # Store the xpaths of the necessary elements
         email_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/form/div[1]/fieldset/div/div[2]/div[1]/input'
         advance_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/form/div[2]/button'
-        # submit_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/div[2]/form[2]/div[2]/div/button/span'
-        submit_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/div[2]/form[2]/div[2]/div'
-
+        submit_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/div[2]/form[2]/div[2]/div/button/span'
 
         # Set the webdriver options and launch the webdriver
         options = Options()
@@ -92,11 +90,13 @@ if __name__ == '__main__':
         options.add_argument("--disable-gpu")
         options.add_argument("enable-automation")
         # options.add_argument("start-maximized")
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-        wait = WebDriverWait(driver, 5)
 
         # Enter all of the email addresses in all of the participating sites
         for url in urls:
+
+            driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+            wait = WebDriverWait(driver, 5)
+
             for email in emails:
                 fails = 0
                 retry_connection(driver, url, fails)
@@ -119,10 +119,13 @@ if __name__ == '__main__':
                     retry_click(driver, submit_xpath, fails)
 
                     # Sometimes you need to click submit twice
-                    fails = 0
-                    retry_click(driver, submit_xpath, fails)
+                    try:
+                        fails = 0
+                        retry_click(driver, submit_xpath, fails)
+                    except ElementClickInterceptedException:
+                        pass
 
                 except TimeoutException:
                     pass
 
-        driver.quit()
+            driver.quit()
