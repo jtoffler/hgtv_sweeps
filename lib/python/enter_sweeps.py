@@ -78,7 +78,9 @@ if __name__ == '__main__':
         # Store the xpaths of the necessary elements
         email_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/form/div[1]/fieldset/div/div[2]/div[1]/input'
         advance_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/form/div[2]/button'
-        submit_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/div[2]/form[2]/div[2]/div/button/span'
+        # submit_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/div[2]/form[2]/div[2]/div/button/span'
+        submit_xpath = '/html/body/div[1]/div/main/section/div/div/div/div/div/div[1]/div/div[2]/form[2]/div[2]/div'
+
 
         # Set the webdriver options and launch the webdriver
         options = Options()
