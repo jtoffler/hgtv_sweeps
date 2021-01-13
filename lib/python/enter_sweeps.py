@@ -93,11 +93,11 @@ if __name__ == '__main__':
 
         # Enter all of the email addresses in all of the participating sites
         for url in urls:
-
-            driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-            wait = WebDriverWait(driver, 5)
-
             for email in emails:
+
+                driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+                wait = WebDriverWait(driver, 5)
+
                 fails = 0
                 retry_connection(driver, url, fails)
 
@@ -128,4 +128,4 @@ if __name__ == '__main__':
                 except TimeoutException:
                     pass
 
-            driver.quit()
+                driver.quit()
